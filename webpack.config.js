@@ -84,13 +84,7 @@ module.exports = {
             { // babel
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: jsLoaders(),
-                loader: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
+                use: jsLoaders(), // еслинт и бебеля в разработки (полифил)
             }
         ],
     }
