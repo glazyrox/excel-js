@@ -84,7 +84,7 @@ module.exports = {
             { // babel
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: jsLoaders(), // еслинт и бабель в разработки (полифил)
+                use: jsLoaders(), // еслинт и бебеля в разработки (полифил)
             }
         ],
     }
