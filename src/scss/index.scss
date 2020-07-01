@@ -5,6 +5,7 @@
 @import "toolbar";
 @import "formula";
 @import "table";
+@import "dashboard";
 
 * {
     padding: 0;
@@ -13,6 +14,7 @@
 }
 
 body {
+    font-size: 12px;
     font-family: 'Roboto', sans-serif;
 }
 
