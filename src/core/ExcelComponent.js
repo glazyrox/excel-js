@@ -4,6 +4,7 @@ export class ExcelComponent extends DomListener {
 
     constructor($root, options = {}) {
         super($root, options.listeners);
+        this.name = options.name || '';
     }
 
    toHTML() {
@@ -12,5 +13,10 @@ export class ExcelComponent extends DomListener {
 
     init() {
         this.initDOMListeners();
+        console.log(this);
+    }
+
+    destroy() {
+        this.removeDOMListeners();
     }
 }

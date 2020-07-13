@@ -13,7 +13,7 @@ export class Excel {
             const $el = $.create('div', Component.className); // див с классом
             const component = new Component($el); // экземпляр класса (инстанс)
             $el.html(component.toHTML()); // создает компонент из текста тэгов
-            $root.append($el); // добавляет в эксель готовый хтмл
+            $root.append($el); // добавляет готовый хтмл
 
             return component;
         })
