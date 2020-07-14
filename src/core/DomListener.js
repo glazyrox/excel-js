@@ -19,7 +19,7 @@ export class DomListener {
                 )
             }
             this[method] = this[method]?.bind(this); // байнд нужный контекст
-            this.$root.on(listener, this[method]);
+            this.$root.on(listener, this[method]); // => будет одна f() по *;
         })
     }
 
