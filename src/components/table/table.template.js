@@ -4,24 +4,31 @@ const ASCI_CODES = {
 };
 
 function toCell() {
+
     return `
         <div class="cell" contenteditable=""></div>
     `
 }
 
 function toColumn(content) {
+
     return `
         <div class="column">
             ${content}
+            <div class="col-resize"></div>
         </div>
     `
 }
 
 function createRow(content, number = '') {
-
+    const resizer = number ? `<div class="row-resize"></div>` : '';
+    
     return `
         <div class="row">
-            <div class="row__info">${number}</div>
+            <div class="row__info">
+                ${number}
+                ${resizer}
+            </div>
             <div class="row__data">${content}</div>
         </div>
     `
