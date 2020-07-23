@@ -17,6 +17,7 @@
         "padded-blocks": "off",
         "quotes": "off",
         "operator-linebreak": "off",
+        "max-len": "off"
         
     },
     "extends": [
