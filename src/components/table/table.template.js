@@ -5,7 +5,7 @@ const ASCI_CODES = {
 
 function toCell(_, index) {
     return `
-        <div class="cell" contenteditable="" data-col="${index + 1}" data-row="${index + 1}">
+        <div class="cell" contenteditable="" data-col="${index + 1}">
         </div>
     `
 }
@@ -23,8 +23,8 @@ function createRow(content, number = '') {
     const resizer = number ? '<div class="row-resize" data-resize="row" ></div>' : '';
     
     return `
-        <div class="row">
-            <div class="row__info" data-type="resizable" data-elem="row" data-row="${number}">
+        <div class="row" data-type="resizable" data-col="${number}">
+            <div class="row__info">
                 ${number}
                 ${resizer}
             </div>
