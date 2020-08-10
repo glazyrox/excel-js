@@ -3,11 +3,25 @@ const ASCI_CODES = {
     Z: 90
 };
 
-function toCell(_, index) {
-    return `
-        <div class="cell" contenteditable="" data-col="${index + 1}">
-        </div>
-    `
+// function toCell(_, index) {
+    // return `
+    //     <div class="cell" contenteditable="" data-col="${index + 1}">
+    //     </div>
+    // `
+// }
+
+function toCell(row) {
+    return function(_, col) {
+
+        return `
+        <div class="cell" contenteditable="" 
+            data-col="${col + 1}" 
+            data-row="${row + 1}"
+            data-id="${col}:${row}"
+        >
+        
+        </div>`
+    }
 }
 
 function toColumn(content, index) {
@@ -50,17 +64,17 @@ export function createTable(rowsCount = 14) {
         .map(toChar)
         .map(toColumn)
         .join('');
-    
-    const rowData = new Array(rowsCount)
-        .fill('')
-        .map(toNumber)
-        .map(toCell)
-        .join('')
-        
+
     rows.push(createRow(cols));
 
-    for (let i = 0; i < rowsCount; i++) {
-        rows.push(createRow(rowData, i + 1));
+    for (let row = 0; row < rowsCount; row++) {
+        const cells = new Array(rowsCount)
+        .fill('')
+        .map(toNumber)
+        .map(toCell(row)) // замыкание сначала принимает row, а потом return f() и принимает (_, index) из map
+        .join('')
+
+        rows.push(createRow(cells, row + 1));
     }
     
     return rows.join('');

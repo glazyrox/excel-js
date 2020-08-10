@@ -1,8 +1,8 @@
 import { ExcelComponent } from "../../core/ExcelComponent";
 import { createTable } from "./table.template";
 
-// import { $ } from '../../core/dom';
 import { onMouseDown } from './utils';
+import { TableSelection } from "./TableSelection";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -17,7 +17,19 @@ export class Table extends ExcelComponent {
         return createTable(26);
     }
 
+    init() {
+        super.init();
+        
+        this.selection = new TableSelection();
+        const $cell = this.$root.find('[data-id="0:0"]');
+        this.selection.select($cell)
+    }
+
     onMousedown(event) {
         onMouseDown(this, event);
+    }
+
+    onClick(event) {
+        
     }
 }
