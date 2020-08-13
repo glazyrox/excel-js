@@ -1,14 +1,32 @@
 export class TableSelection {
+    static className = 'selected';
+
     constructor() {
         this.group = [];
+        this.pivotItem;
     }
 
     select($el) { // $ell instanceof class DOM
-        this.group.push();
-        $el.addClass('selected');
+        this.clear();
+        this.group = [];
+
+        this.group.push($el);
+        this.pivotItem = $el;
+        $el.addClass(TableSelection.className);
     }
 
-    selectGroup() {
+    selectGroup(selectedGroupItems) {
+        this.clear();
+        this.group = selectedGroupItems;
+        
+        this.setSelect();
+    }
 
+    clear() {
+        this.group.forEach(item => item.removeClass(TableSelection.className));
+    }
+
+    setSelect() {
+        this.group.forEach(item => item.addClass(TableSelection.className));
     }
 }
