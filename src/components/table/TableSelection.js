@@ -8,6 +8,7 @@ export class TableSelection {
 
     select($el) { // $ell instanceof class DOM
         this.clear();
+        $el.focus();
         this.group = [];
 
         this.group.push($el);

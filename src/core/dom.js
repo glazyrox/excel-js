@@ -14,6 +14,11 @@ class Dom {
 
         return this.$el.outerHTL.trim();
     }
+    
+    focus() {
+        this.$el.focus();
+        return this.$el;
+    }
 
    clear(params) {
         this.html('');
@@ -48,6 +53,18 @@ class Dom {
 
     get data() {
         return this.$el.dataset;
+    }
+
+    text(text) {
+        if (text) {
+            this.$el.textContent = text;
+            return this.$el;
+        }
+
+        if (this.$el.tagName.toLowerCase() === 'input') {
+            return this.$el.value.trim();
+        }
+        return this.$el.textContent.trim();
     }
 
     closest(selector) {

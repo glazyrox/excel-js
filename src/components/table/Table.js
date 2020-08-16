@@ -3,15 +3,17 @@ import { createTable } from "./table.template";
 
 import { onMouseDown } from './utils';
 import { TableSelection } from "./TableSelection";
-import { shouldSelect, shouldResize, getMultiSelect } from "./table.functions";
+import { shouldSelect, shouldResize, getMultiSelect, checkKeyPress, getNextCellCoords, getTextTyFormula } from "./table.functions";
 import { $ } from "../../core/dom";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
 
-    constructor($root) {
+    constructor($root, options = {}) {
         super($root, {
-            listeners: ['mousedown', 'click']
+            name: 'table',
+            listeners: ['mousedown', 'keydown'],
+            ...options
         })
     }
 
@@ -27,7 +29,17 @@ export class Table extends ExcelComponent {
         super.init();
         
         const $cell = this.$root.find('[data-id="0:0"]');
-        this.selection.select($cell)
+        this.selection.select($cell);
+
+        this.$on('formula:input', text => {
+            this.selection.pivotItem.text(text);
+        });
+
+        this.$on('formula:done', () => {
+            this.selection.pivotItem.focus();
+        })
+        
+        this.$emit('table:getTextToFormulaInput', $cell.text());
     }
 
     onMousedown(event) {
@@ -44,12 +56,25 @@ export class Table extends ExcelComponent {
             } else {
                 // const id = event.target.getAttribute('data-id');
                 // const $targetCell = this.$root.find(`[data-id="${id}"]`); hmmm :)
-    
+     
                 this.selection.select($targetCell)
             }
+
+            getTextTyFormula($(event.target).text(), this);
         }
     }
 
-    onClick(event) {
+    onKeydown(event) {
+        const { key } = event;
+
+        if (checkKeyPress(key) && !event.shiftKey) {
+            event.preventDefault();
+            const coords = this.selection.pivotItem.$el.dataset.id.split(':');
+
+            const $cell = this.$root.find(getNextCellCoords(key, coords));
+            this.selection.select($cell)
+        }
+
+        setTimeout(() => getTextTyFormula($(event.target).text(), this), 0);
     }
 }

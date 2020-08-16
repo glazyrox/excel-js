@@ -25,3 +25,42 @@ export const getMultiSelect = (pivotItem, targetItem, root) => {
 
     return multiSelectedItems;
 }
+
+export const checkKeyPress = key => {
+    const navigationKeys = ['Enter', 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'];
+
+    return navigationKeys.includes(key);
+}
+
+export const getNextCellCoords = (key, coords) => { // (0 - row, 0 - cell)
+    let [row, cell] = [...coords];
+    const MIN_VALUE = 0;
+
+    switch (key) {
+        case 'Enter':
+        case 'ArrowDown':
+            row++;
+            break
+        case 'Tab':
+        case 'ArrowRight':
+            cell++
+            break
+        case 'ArrowLeft':
+            cell = cell - 1 <= MIN_VALUE ? MIN_VALUE : cell -1
+            break
+        case 'ArrowUp':
+            row = row - 1 <= MIN_VALUE ? MIN_VALUE : row - 1
+            break
+        default:
+            break
+    }
+
+    return `[data-id='${row}:${cell}']`
+}
+
+
+export const getTextTyFormula = (text, _this) => {
+    // const { textContent } = event.target;
+
+    _this.$emit('table:getTextToFormulaInput', text);
+}
