@@ -28,11 +28,3 @@ export class Emmiter {
         }
     }
 }
-
-const emmiter = new Emmiter;
-
-const unsub = emmiter.subscribe('sosat', data => console.log(data));
-
-unsub();
-
-emmiter.emit('sosat', 'sosy');

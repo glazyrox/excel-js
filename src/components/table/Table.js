@@ -63,7 +63,7 @@ export class Table extends ExcelComponent {
                 this.$dispatch({type: "TEST"});
             }
 
-            getTextTyFormula($(event.target).text(), this);
+            getTextTyFormula($(event.target).text(), this); // emitter
         }
     }
 
