@@ -30,6 +30,7 @@ export class Table extends ExcelComponent {
         
         const $cell = this.$root.find('[data-id="0:0"]');
         this.selection.select($cell);
+        this.$dispatch({type: "TEST"});
 
         this.$on('formula:input', text => {
             this.selection.pivotItem.text(text);
@@ -40,6 +41,7 @@ export class Table extends ExcelComponent {
         })
         
         this.$emit('table:getTextToFormulaInput', $cell.text());
+        this.$subscribe(store => console.log('TABLE', store));
     }
 
     onMousedown(event) {
@@ -58,6 +60,7 @@ export class Table extends ExcelComponent {
                 // const $targetCell = this.$root.find(`[data-id="${id}"]`); hmmm :)
      
                 this.selection.select($targetCell)
+                this.$dispatch({type: "TEST"});
             }
 
             getTextTyFormula($(event.target).text(), this);

@@ -6,11 +6,15 @@ export class Excel {
         this.$el = $(selector)
         this.components = options.components || [];
         this.emmiter = new Emmiter();
+        this.store = options.store;
     }
 
     getRoot() {
         const $root = $.create('div', 'excel');
-        const componentOptions = { emmiter: this.emmiter }
+        const componentOptions = { 
+            emmiter: this.emmiter,
+            store: this.store,
+        }
 
         this.components = this.components.map(Component => { // массив классов
             const $el = $.create('div', Component.className); // див с классом
