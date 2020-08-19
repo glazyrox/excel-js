@@ -26,8 +26,6 @@ export class Formula extends ExcelComponent {
             const input = this.$root.$el.querySelector('[data-input="input"]');
             input.textContent = text;
         });
-
-        this.$subscribe(store => console.log('FORMULA', store));
     }
 
     onInput(event) {

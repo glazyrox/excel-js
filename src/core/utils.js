@@ -24,3 +24,12 @@ export const getRange = (first, last) => {
         .fill('')
         .map((_, index) => first + index);
 }
+
+export const storage = (key, data) => {
+    console.log(key, data);
+    if (!data) {
+        console.log(localStorage);
+        return JSON.parse(localStorage[key]);
+    }
+    localStorage.setItem(key, JSON.stringify(data));
+}

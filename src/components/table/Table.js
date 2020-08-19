@@ -6,6 +6,8 @@ import { TableSelection } from "./TableSelection";
 import { shouldSelect, shouldResize, getMultiSelect, checkKeyPress, getNextCellCoords, getTextTyFormula } from "./table.functions";
 import { $ } from "../../core/dom";
 
+import * as actions from './../../redux/actions'
+
 export class Table extends ExcelComponent {
     static className = 'excel__table';
 
@@ -30,7 +32,6 @@ export class Table extends ExcelComponent {
         
         const $cell = this.$root.find('[data-id="0:0"]');
         this.selection.select($cell);
-        this.$dispatch({type: "TEST"});
 
         this.$on('formula:input', text => {
             this.selection.pivotItem.text(text);
@@ -41,12 +42,21 @@ export class Table extends ExcelComponent {
         })
         
         this.$emit('table:getTextToFormulaInput', $cell.text());
-        this.$subscribe(store => console.log('TABLE', store));
+    }
+
+
+    async resizeTable() {
+        try {
+            const data = await onMouseDown(this, event);
+            this.$dispatch(actions.tableResize(data));
+        } catch (e) {
+            console.warn('Error: ', e.message);
+        }
     }
 
     onMousedown(event) {
         if (shouldResize(event)) {
-            onMouseDown(this, event);
+            this.resizeTable(this, event);
         } else if (shouldSelect(event)) {
             const $targetCell = $(event.target); // its faster
 
@@ -60,7 +70,6 @@ export class Table extends ExcelComponent {
                 // const $targetCell = this.$root.find(`[data-id="${id}"]`); hmmm :)
      
                 this.selection.select($targetCell)
-                this.$dispatch({type: "TEST"});
             }
 
             getTextTyFormula($(event.target).text(), this); // emitter
