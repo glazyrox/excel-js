@@ -20,7 +20,8 @@ export class Table extends ExcelComponent {
     }
 
     toHTML() {
-        return createTable(26);
+        const tableSizes = this.store.getState();
+        return createTable(26, tableSizes);
     }
 
     prepare() {

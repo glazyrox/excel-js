@@ -25,5 +25,3 @@ export const createStore = (rootReducer, initialState = {}) => {
         }
     }
 }
-
-// переписать на класс, если хочешь

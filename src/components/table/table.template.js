@@ -3,31 +3,28 @@ const ASCI_CODES = {
     Z: 90
 };
 
-// function toCell(_, index) {
-    // return `
-    //     <div class="cell" contenteditable="" data-col="${index + 1}">
-    //     </div>
-    // `
-// }
+const DEFAULT_WIDTH = 120;
 
-function toCell(row) {
-    return function(_, col) {
+function toCell(row, state) {
 
+    return function(_, index) {
+        const width = getWidth(index, state)
         return `
         <div class="cell" contenteditable="" 
-            data-col="${col + 1}" 
+            data-col="${index + 1}" 
             data-row="${row + 1}"
             data-type="cell"
-            data-id="${row}:${col}"
+            data-id="${row}:${index}"
+            style="width: ${width}"
         >
         
         </div>`
     }
 }
 
-function toColumn(content, index) {
+function toColumn({content, index, width}) {
     return `
-        <div class="column" data-type="resizable" data-col="${index + 1}">
+        <div class="column" data-type="resizable" data-col="${index + 1}" style="width: ${width}">
             ${content}
             <div class="col-resize" data-resize="col" ></div>
         </div>
@@ -56,14 +53,31 @@ function toNumber(_, index) {
     return index + 1;
 }
 
-export function createTable(rowsCount = 14) {
+const getWidth = (index, state) => {
+    return (state[index + 1]|| DEFAULT_WIDTH) + 'px';
+}
+
+const withWidthFrom = (state) => { // nice
+    return (content, index) => {
+        return {
+            content, index, width: getWidth(index, state.colState)
+        }
+    }
+}
+
+export function createTable(rowsCount = 14, state) {
     const colsCount = ASCI_CODES.Z - ASCI_CODES.A + 1;
     const rows = [];
 
     const cols = new Array(colsCount) // column
         .fill('')
         .map(toChar)
+        .map(withWidthFrom(state)) 
         .map(toColumn)
+        // .map((content, index) => { // замена сверху
+        //     const width = getWith(index, state.colState)
+        //     return toColumn(content, index, width);
+        // }) 
         .join('');
 
     rows.push(createRow(cols));
@@ -72,7 +86,7 @@ export function createTable(rowsCount = 14) {
         const cells = new Array(rowsCount)
         .fill('')
         .map(toNumber)
-        .map(toCell(row)) // замыкание сначала принимает row, а потом return f() и принимает (_, index) из map
+        .map(toCell(row, state.colState) ) // замыкание сначала принимает row, а потом return f() и принимает (_, index) из map
         .join('')
 
         rows.push(createRow(cells, row + 1));
