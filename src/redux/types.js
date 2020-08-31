@@ -1,1 +1,3 @@
-export const TABLE_RESIZE = "TABLE_RESIZE";
+export const TABLE_CELL_RESIZE = 'TABLE_CELL_RESIZE';
+export const TABLE_ROW_RESIZE = 'TABLE_ROW_RESIZE'
+export const CELLS_VALUES = 'CELLS_VALUES';

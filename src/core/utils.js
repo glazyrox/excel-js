@@ -26,9 +26,8 @@ export const getRange = (first, last) => {
 }
 
 export const storage = (key, data) => {
-    console.log(key, data);
     if (!data) {
-        console.log(localStorage);
+        console.log(localStorage, 'tut');
         return JSON.parse(localStorage[key]);
     }
     localStorage.setItem(key, JSON.stringify(data));

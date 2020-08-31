@@ -49,7 +49,7 @@ export class Table extends ExcelComponent {
     async resizeTable() {
         try {
             const data = await onMouseDown(this, event);
-            this.$dispatch(actions.tableResize(data));
+                this.$dispatch(actions.tableResize(data));
         } catch (e) {
             console.warn('Error: ', e.message);
         }
@@ -77,17 +77,25 @@ export class Table extends ExcelComponent {
         }
     }
 
+    postCellDataToStore(value, id) {
+        const data = {
+            value,
+            id
+        }
+
+        this.$dispatch(actions.saveCellTextToStore(data));
+    }
+
     onKeydown(event) {
         const { key } = event;
-
+        const coords = this.selection.pivotItem.$el.dataset.id.split(':');
+        const $cell = this.$root.find(getNextCellCoords(key, coords));
         if (checkKeyPress(key) && !event.shiftKey) {
             event.preventDefault();
-            const coords = this.selection.pivotItem.$el.dataset.id.split(':');
-
-            const $cell = this.$root.find(getNextCellCoords(key, coords));
-            this.selection.select($cell)
+            this.selection.select($cell);
         }
 
         setTimeout(() => getTextTyFormula($(event.target).text(), this), 0);
+        setTimeout(() => this.postCellDataToStore($cell.$el.textContent, coords.join(':'), ), 0);
     }
 }

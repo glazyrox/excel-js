@@ -31,7 +31,7 @@ const onMouseUp = (type, localThis, value, $parent, colAtribute, $resizer) => {
         $parent.css({
             height: value + 'px'
         });
-        Array.from(localThis.$root.findAll(`[data-col="${colAtribute}"]`))
+        Array.from(localThis.$root.findAll(`[data-row="${colAtribute}"]`))
         .forEach(item => item.style.height = value + 'px');
     }
 
@@ -70,9 +70,11 @@ export const onMouseDown = (localThis, event) => {
 
             document.onmouseup = () => {
                 onMouseUp(type, localThis, value, $parent, colAtribute, $resizer);
+                console.log('utils', type);
                 resolve({ // like return 
                     value,
-                    id: type === 'col' ? $parent.data[type] : null
+                    id: $parent.data[type],
+                    type: type === 'col' ? type : null
                 })
             }
 

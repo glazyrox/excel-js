@@ -4,11 +4,15 @@ const ASCI_CODES = {
 };
 
 const DEFAULT_WIDTH = 120;
+const DEFAULT_HEIGHT = 24;
 
 function toCell(row, state) {
+    const { colState, cellsState } = state;
 
     return function(_, index) {
-        const width = getWidth(index, state)
+        const width = getWidth(index, colState);
+        const cellValue = getCellValue(row, index, cellsState);
+
         return `
         <div class="cell" contenteditable="" 
             data-col="${index + 1}" 
@@ -17,7 +21,7 @@ function toCell(row, state) {
             data-id="${row}:${index}"
             style="width: ${width}"
         >
-        
+        ${cellValue}
         </div>`
     }
 }
@@ -31,11 +35,13 @@ function toColumn({content, index, width}) {
     `
 }
 
-function createRow(content, number = '') {
+function createRow(content, number = '', state = {}) {
+    const { rowState } = state;
+    const height = getHeight(number, rowState);
     const resizer = number ? '<div class="row-resize" data-resize="row" ></div>' : '';
     
     return `
-        <div class="row" data-type="resizable" data-col="${number}">
+        <div class="row" data-type="resizable" data-col="${number}" data-row="${number}" style="height: ${height}">
             <div class="row__info">
                 ${number}
                 ${resizer}
@@ -49,12 +55,20 @@ function toChar(_, index) {
     return String.fromCharCode(ASCI_CODES.A + index);
 }
 
+const getCellValue = (row, index, cellState = {}) => {
+    return cellState[row + ':' + index] || '';
+}
+
 function toNumber(_, index) {
     return index + 1;
 }
 
-const getWidth = (index, state) => {
-    return (state[index + 1]|| DEFAULT_WIDTH) + 'px';
+const getWidth = (index, state = {}) => {
+    return (state[index + 1] || DEFAULT_WIDTH) + 'px';
+}
+
+const getHeight = (index, state = {}) => {
+    return (state[index] || DEFAULT_HEIGHT) + 'px';
 }
 
 const withWidthFrom = (state) => { // nice
@@ -86,10 +100,10 @@ export function createTable(rowsCount = 14, state) {
         const cells = new Array(rowsCount)
         .fill('')
         .map(toNumber)
-        .map(toCell(row, state.colState) ) // замыкание сначала принимает row, а потом return f() и принимает (_, index) из map
+        .map(toCell(row, state) ) // замыкание сначала принимает row, а потом return f() и принимает (_, index) из map
         .join('')
 
-        rows.push(createRow(cells, row + 1));
+        rows.push(createRow(cells, row + 1, state));
     }
     
     return rows.join('');
