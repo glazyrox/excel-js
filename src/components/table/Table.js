@@ -14,7 +14,7 @@ export class Table extends ExcelComponent {
     constructor($root, options = {}) {
         super($root, {
             name: 'table',
-            listeners: ['mousedown', 'keydown'],
+            listeners: ['mousedown', 'keydown', 'input'],
             ...options
         })
     }
@@ -36,20 +36,19 @@ export class Table extends ExcelComponent {
 
         this.$on('formula:input', text => {
             this.selection.pivotItem.text(text);
+            this.saveTextToStore(text);
         });
 
         this.$on('formula:done', () => {
             this.selection.pivotItem.focus();
         })
-        
-        this.$emit('table:getTextToFormulaInput', $cell.text());
     }
 
 
     async resizeTable() {
         try {
             const data = await onMouseDown(this, event);
-                this.$dispatch(actions.tableResize(data));
+            this.$dispatch(actions.tableResize(data));
         } catch (e) {
             console.warn('Error: ', e.message);
         }
@@ -77,7 +76,8 @@ export class Table extends ExcelComponent {
         }
     }
 
-    postCellDataToStore(value, id) {
+    saveTextToStore(value) {
+        const { id } = this.selection.pivotItem.$el.dataset;
         const data = {
             value,
             id
@@ -94,8 +94,9 @@ export class Table extends ExcelComponent {
             event.preventDefault();
             this.selection.select($cell);
         }
+    }
 
-        setTimeout(() => getTextTyFormula($(event.target).text(), this), 0);
-        setTimeout(() => this.postCellDataToStore($cell.$el.textContent, coords.join(':'), ), 0);
+    onInput(event) {
+        this.saveTextToStore($(event.target).text());
     }
 }

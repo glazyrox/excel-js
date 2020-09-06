@@ -6,7 +6,7 @@ const ASCI_CODES = {
 const DEFAULT_WIDTH = 120;
 const DEFAULT_HEIGHT = 24;
 
-function toCell(row, state) {
+const toCell = (row, state) => {
     const { colState, cellsState } = state;
 
     return function(_, index) {
@@ -26,7 +26,7 @@ function toCell(row, state) {
     }
 }
 
-function toColumn({content, index, width}) {
+const toColumn = ({content, index, width}) => {
     return `
         <div class="column" data-type="resizable" data-col="${index + 1}" style="width: ${width}">
             ${content}
@@ -35,7 +35,7 @@ function toColumn({content, index, width}) {
     `
 }
 
-function createRow(content, number = '', state = {}) {
+const createRow = (content, number = '', state = {}) => {
     const { rowState } = state;
     const height = getHeight(number, rowState);
     const resizer = number ? '<div class="row-resize" data-resize="row" ></div>' : '';
@@ -51,7 +51,7 @@ function createRow(content, number = '', state = {}) {
     `
 }
 
-function toChar(_, index) {
+const toChar = (_, index) => {
     return String.fromCharCode(ASCI_CODES.A + index);
 }
 
@@ -59,7 +59,7 @@ const getCellValue = (row, index, cellState = {}) => {
     return cellState[row + ':' + index] || '';
 }
 
-function toNumber(_, index) {
+const toNumber = (_, index) => {
     return index + 1;
 }
 
@@ -79,7 +79,7 @@ const withWidthFrom = (state) => { // nice
     }
 }
 
-export function createTable(rowsCount = 14, state) {
+export const createTable = (rowsCount = 14, state) => {
     const colsCount = ASCI_CODES.Z - ASCI_CODES.A + 1;
     const rows = [];
 

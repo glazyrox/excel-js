@@ -70,7 +70,6 @@ export const onMouseDown = (localThis, event) => {
 
             document.onmouseup = () => {
                 onMouseUp(type, localThis, value, $parent, colAtribute, $resizer);
-                console.log('utils', type);
                 resolve({ // like return 
                     value,
                     id: $parent.data[type],

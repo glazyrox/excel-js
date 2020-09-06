@@ -63,4 +63,5 @@ export const getTextTyFormula = (text, _this) => {
     // const { textContent } = event.target;
 
     _this.$emit('table:getTextToFormulaInput', text);
+    // tut dispatch v store
 }

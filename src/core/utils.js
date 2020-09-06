@@ -27,8 +27,13 @@ export const getRange = (first, last) => {
 
 export const storage = (key, data) => {
     if (!data) {
-        console.log(localStorage, 'tut');
         return JSON.parse(localStorage[key]);
     }
     localStorage.setItem(key, JSON.stringify(data));
+}
+
+export const isEqual = (a, b) => {
+    if (typeof a === 'object' && typeof b === 'object') {
+        return JSON.stringify(a) === JSON.stringify(b);
+    }
 }

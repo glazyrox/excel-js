@@ -1,7 +1,7 @@
 import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE } from './types';
 
 export const rootReducer = (state = {}, action) => {
-    const {type, data} = action;
+    const { type, data } = action;
     let prevState;
 
     switch (type) {
@@ -24,7 +24,8 @@ export const rootReducer = (state = {}, action) => {
             prevState[data.id] = data.value;
             return {
                 ...state,
-                cellsState: prevState
+                cellsState: prevState,
+                currentText: data.value
             }
         default: state
     }
