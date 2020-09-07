@@ -1,6 +1,8 @@
-import { ExcelComponent } from "../../core/ExcelComponent";
+import { ExcelStateComponent } from "../../core/ExcelStateComponent";
+import { createToolbar } from "./toolbar.template";
+import { $ } from '../../core/dom';
 
-export class Toolbar extends ExcelComponent {
+export class Toolbar extends ExcelStateComponent {
     static className = 'excel__toolbar';
 
     constructor($root, options) {
@@ -11,48 +13,33 @@ export class Toolbar extends ExcelComponent {
         })
     }
 
+    prepare() {
+        const initialState = {
+            textAling: 'left',
+            fontWitght: 'normal',
+            textDecoration: 'none',
+            fontStyle: 'normal',
+        }
+        this.initState(initialState);
+    }
+
+    get template() {
+        return createToolbar(this.state);
+    }
+
     toHTML() {
-        return `
-            <div class="button">
-                <span class="material-icons">
-                    format_align_left
-            </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_align_center
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_align_right
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_bold
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_italic
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_underline
-                </span>
-            </div>
-        `
+        return this.template;
     }
 
     onClick(event) {
-        console.log(event.target);
+        const $target = $(event.target);
+
+        if ($target.data.type === 'button') {
+            const value = JSON.parse($target.data.value);
+            const key = Object.keys(value)[0];
+            this.setState({[key]: value[key]})
+            console.log(this.state);
+        }
     }
     
 }

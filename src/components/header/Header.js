@@ -10,9 +10,15 @@ export class Header extends ExcelComponent {
         })
     }
 
+    init() {
+        // this.header = this.$root.find("#header");
+        
+        // console.log(header)
+    }
+
     toHTML() {
         return `
-        <input type="text" class="input" value="Новая таблица" />
+        <input id="header" type="text" class="input" value="Новая таблица" />
 
             <div>
                 <div class="button">
