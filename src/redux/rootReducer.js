@@ -1,34 +1,44 @@
-import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE } from './types';
+import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES } from './types';
 
 export const rootReducer = (state = {}, action) => {
     const { type, data } = action;
-    let prevState;
+    let field;
 
     switch (type) {
         case TABLE_CELL_RESIZE:
-            prevState = { ...state.colState } || {};
-            prevState[data.id] = data.value;
+            field = 'colState';
+            // prevState = { ...state.colState } || {};
+            // prevState[data.id] = data.value;
             return {
                 ...state, 
-                colState: prevState // id: value
+                colState: value(state, field, action) // id: value
             }
         case TABLE_ROW_RESIZE:
-            prevState = { ...state.rowState } || {};
-            prevState[data.id] = data.value;
+            field = 'rowState';
             return {
                 ...state,
-                rowState: prevState
+                rowState: value(state, field, action)
             }
         case CELLS_VALUES:
-            prevState = { ...state.cellsState} || {}
-            prevState[data.id] = data.value;
+            field = 'cellState';
             return {
                 ...state,
-                cellsState: prevState,
+                cellsState: value(state, field, action),
                 currentText: data.value
+            }
+        case CHANGE_CELL_STYLES:
+            return {
+                ...state,
+                currentStyles: data
             }
         default: state
     }
 
     return state
+}
+
+const value = (state, field, action) => {
+    const val = state[field] || {};
+    val[action.data.id] = action.data.value;
+    return val;
 }

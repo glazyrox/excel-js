@@ -80,9 +80,18 @@ class Dom {
     }
 
     css(styles = {}) {
-        Object.keys(styles).map(key => {
-            this.$el.style[key] = styles[key];
-        })
+        Object
+            .keys(styles)
+            .forEach(key => {
+                this.$el.style[key] = styles[key];
+            })
+    }
+
+    getStyles(styles = []) {
+        return styles.reduce((res, current) => {
+            res[current] = this.$el.style[current];
+            return res
+        }, {})
     }
 
     addClass(className) {

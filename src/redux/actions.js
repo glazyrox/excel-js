@@ -1,4 +1,4 @@
-import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE } from './types';
+import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE, CHANGE_CELL_STYLES } from './types';
 
 // Action Creator
 export const tableResize = (data) => {
@@ -13,6 +13,13 @@ export const saveCellTextToStore = (data) => {
 
     return {
         type: CELLS_VALUES,
+        data
+    }
+}
+
+export const changeStyles = (data) => {
+    return {
+        type: CHANGE_CELL_STYLES,
         data
     }
 }

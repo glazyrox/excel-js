@@ -1,3 +1,6 @@
+import { DEFAULT_TOOLBAR_BUTTONS } from "../../constants";
+import { camelCaseToDash } from '../../core/utils';
+
 const ASCI_CODES = {
     A: 65,
     Z: 90
@@ -12,14 +15,17 @@ const toCell = (row, state) => {
     return function(_, index) {
         const width = getWidth(index, colState);
         const cellValue = getCellValue(row, index, cellsState);
-
+        const defaultStyles = DEFAULT_TOOLBAR_BUTTONS;
+        const styles = Object.keys(defaultStyles)
+            .map(key => `${camelCaseToDash(key)}:${defaultStyles[key]}`)
+            .join(';')
         return `
         <div class="cell" contenteditable="" 
             data-col="${index + 1}" 
             data-row="${row + 1}"
             data-type="cell"
             data-id="${row}:${index}"
-            style="width: ${width}"
+            style="${styles};width: ${width}"
         >
         ${cellValue}
         </div>`

@@ -37,3 +37,7 @@ export const isEqual = (a, b) => {
         return JSON.stringify(a) === JSON.stringify(b);
     }
 }
+
+export const camelCaseToDash = (myStr) => {
+    return myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
+}

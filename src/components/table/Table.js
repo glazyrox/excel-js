@@ -7,6 +7,7 @@ import { shouldSelect, shouldResize, getMultiSelect, checkKeyPress, getNextCellC
 import { $ } from "../../core/dom";
 
 import * as actions from './../../redux/actions'
+import { DEFAULT_TOOLBAR_BUTTONS } from "../../constants";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -42,6 +43,10 @@ export class Table extends ExcelComponent {
         this.$on('formula:done', () => {
             this.selection.pivotItem.focus();
         })
+
+        this.$on('toolbar:appStyle', value => {
+            this.selection.applyStyle(value);
+        })
     }
 
 
@@ -69,7 +74,10 @@ export class Table extends ExcelComponent {
                 // const id = event.target.getAttribute('data-id');
                 // const $targetCell = this.$root.find(`[data-id="${id}"]`); hmmm :)
      
-                this.selection.select($targetCell)
+                this.selection.select($targetCell);
+                const keys = Object.keys(DEFAULT_TOOLBAR_BUTTONS);
+                const cellStyles = $targetCell.getStyles(keys);
+                this.$dispatch(actions.changeStyles(cellStyles));
             }
 
             getTextTyFormula($(event.target).text(), this); // emitter

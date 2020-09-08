@@ -6,7 +6,7 @@ export class TableSelection {
         this.pivotItem;
     }
 
-    select($el) { // $ell instanceof class DOM
+    select($el) { // $el instanceof class DOM
         this.clear();
         $el.focus();
         this.group = [];
@@ -29,5 +29,9 @@ export class TableSelection {
 
     setSelect() {
         this.group.forEach(item => item.addClass(TableSelection.className));
+    }
+
+    applyStyle(style) {
+        this.group.forEach($el => $el.css(style))
     }
 }

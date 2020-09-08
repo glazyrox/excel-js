@@ -4,6 +4,7 @@ const defaultState = {
   rowState: {},
   colState: {},
   cellsState: {},
+  currentStyles: {}
 }
 
 export const initialState = storage('excel-state')

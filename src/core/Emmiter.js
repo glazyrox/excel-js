@@ -9,9 +9,8 @@ export class Emmiter {
         if (!Array.isArray(this.listeners[event])) {
             return false;
         }
-
         this.listeners[event].forEach(listener => {
-            listener(args);
+            listener(...args);
         })
 
         return true;
