@@ -41,3 +41,12 @@ export const isEqual = (a, b) => {
 export const camelCaseToDash = (myStr) => {
     return myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
 }
+
+export const stylesToInline = (styles = {}) => {
+    if (!Object.keys(styles).length) {
+        return;
+    }
+    return Object.keys(styles)
+    .map(key => `${camelCaseToDash(key)}:${styles[key]}`)
+    .join(';')
+}

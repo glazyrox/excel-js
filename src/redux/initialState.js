@@ -4,7 +4,9 @@ const defaultState = {
   rowState: {},
   colState: {},
   cellsState: {},
-  currentStyles: {}
+  currentStyles: {},
+  stylesState: {},
+  title: 'Название таблицы'
 }
 
 export const initialState = storage('excel-state')

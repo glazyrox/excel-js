@@ -1,4 +1,4 @@
-import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE, CHANGE_CELL_STYLES } from './types';
+import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE } from './types';
 
 // Action Creator
 export const tableResize = (data) => {
@@ -20,6 +20,21 @@ export const saveCellTextToStore = (data) => {
 export const changeStyles = (data) => {
     return {
         type: CHANGE_CELL_STYLES,
+        data
+    }
+}
+
+export const applyStyles = (data) => {
+    console.log(data);
+    return {
+        type: APPLY_STYLE,
+        data
+    }
+}
+
+export const changeTitle = (data) => {
+    return {
+        type: CHANGE_TITLE,
         data
     }
 }

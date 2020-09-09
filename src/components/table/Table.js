@@ -46,7 +46,11 @@ export class Table extends ExcelComponent {
 
         this.$on('toolbar:appStyle', value => {
             this.selection.applyStyle(value);
-        })
+            this.$dispatch(actions.applyStyles({
+                value,
+                ids: this.selection.selectedIds
+            }))
+        }) 
     }
 
 

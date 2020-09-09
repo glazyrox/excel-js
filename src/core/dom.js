@@ -55,6 +55,10 @@ class Dom {
         return this.$el.dataset;
     }
 
+    id() {
+        return this.$el.dataset.id;
+    }
+
     text(text) {
         if (text) {
             this.$el.textContent = text;

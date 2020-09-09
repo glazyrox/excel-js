@@ -1,4 +1,4 @@
-import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES } from './types';
+import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE } from './types';
 
 export const rootReducer = (state = {}, action) => {
     const { type, data } = action;
@@ -21,9 +21,10 @@ export const rootReducer = (state = {}, action) => {
             }
         case CELLS_VALUES:
             field = 'cellState';
+            console.log(data);
             return {
                 ...state,
-                cellsState: value(state, field, action),
+                cellsState: {...state.cellsState, ...value(state, field, action)},
                 currentText: data.value
             }
         case CHANGE_CELL_STYLES:
@@ -31,6 +32,22 @@ export const rootReducer = (state = {}, action) => {
                 ...state,
                 currentStyles: data
             }
+        case APPLY_STYLE: 
+        field = 'stylesState';
+        const val = state[field] || {};
+        data.ids.forEach(id => {
+            val[id] = {...val[id], ...data.value}
+        })
+            return {
+                ...state,
+                [field]: val,
+                currentStyles: {...state.currentStyles, ...data.value}
+            }
+        case CHANGE_TITLE: 
+            return {
+                ...state,
+                title: data,
+            }    
         default: state
     }
 
