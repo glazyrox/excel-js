@@ -1,9 +1,9 @@
 const INIT = "INIT";
 
 export const createStore = (rootReducer, initialState = {}) => {
-    let state = rootReducer(initialState, {type: INIT});
+    let state = rootReducer({...initialState}, { type: INIT });
+    
     let listeners = [];
-
     return {
         subscribe(fn) {
             listeners.push(fn);

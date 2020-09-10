@@ -25,8 +25,8 @@ export const getRange = (first, last) => {
         .map((_, index) => first + index);
 }
 
-export const storage = (key, data) => {
-    if (!data) {
+export const storage = (key, data = null) => {
+    if (!data && localStorage[key]) {
         return JSON.parse(localStorage[key]);
     }
     localStorage.setItem(key, JSON.stringify(data));
@@ -49,4 +49,19 @@ export const stylesToInline = (styles = {}) => {
     return Object.keys(styles)
     .map(key => `${camelCaseToDash(key)}:${styles[key]}`)
     .join(';')
+}
+
+export const debounce = (fn, wait) => {
+    let timeout;
+    return (...args) => {
+
+        const later = () => {
+            clearTimeout(timeout);
+            // eslint-disable-next-line
+            fn.apply(this, args);
+        }
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    }
 }

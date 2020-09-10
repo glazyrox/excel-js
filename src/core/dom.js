@@ -105,6 +105,16 @@ class Dom {
     removeClass(className) {
         this.$el.classList.remove(className);
     }
+
+    attr(name, value) {
+        console.log(name, value);
+        if (value) {
+            this.$el.setAttribute(name, value);
+            return this
+        }
+
+        return this.$el.setAttribute(name);
+    }
 }
 
 export function $(selector) {

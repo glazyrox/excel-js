@@ -82,6 +82,7 @@ export class Table extends ExcelComponent {
                 const keys = Object.keys(DEFAULT_TOOLBAR_BUTTONS);
                 const cellStyles = $targetCell.getStyles(keys);
                 this.$dispatch(actions.changeStyles(cellStyles));
+                this.saveTextToStore($(event.target).text());
             }
 
             getTextTyFormula($(event.target).text(), this); // emitter

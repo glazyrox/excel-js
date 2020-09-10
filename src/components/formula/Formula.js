@@ -28,11 +28,13 @@ export class Formula extends ExcelComponent {
         this.$on('table:getTextToFormulaInput', text => {
             this.$formula.text(text);
         });
+
+        this.$formula.text(this.store.getState().currentText);
     }
 
     storeChanged(changes) {
         const { currentText } = changes;
-        this.$formula.text(currentText);
+        currentText ? this.$formula.text(currentText) : this.$formula.text(' ');
     }
 
     onInput(event) {
