@@ -107,13 +107,12 @@ class Dom {
     }
 
     attr(name, value) {
-        console.log(name, value);
         if (value) {
             this.$el.setAttribute(name, value);
             return this
         }
 
-        return this.$el.setAttribute(name);
+        return this.$el.getAttribute(name);
     }
 }
 

@@ -1,4 +1,5 @@
 import { DEFAULT_TOOLBAR_BUTTONS } from "../../constants";
+import { parse } from "../../core/parse";
 import { stylesToInline } from '../../core/utils';
 
 const ASCI_CODES = {
@@ -25,8 +26,9 @@ const toCell = (row, state) => {
             data-type="cell"
             data-id="${id}"
             style="${styles};width: ${width}"
+            data-value="${cellValue || ''}"
         >
-        ${cellValue}
+        ${parse(cellValue)}
         </div>`
     }
 }

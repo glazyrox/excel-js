@@ -8,6 +8,7 @@ import { $ } from "../../core/dom";
 
 import * as actions from './../../redux/actions'
 import { DEFAULT_TOOLBAR_BUTTONS } from "../../constants";
+import { parse } from "../../core/parse";
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -34,9 +35,13 @@ export class Table extends ExcelComponent {
         
         const $cell = this.$root.find('[data-id="0:0"]');
         this.selection.select($cell);
-
+        this.$dispatch(actions.changeCurrentText(this.selection.pivotItem.text()));
+        
         this.$on('formula:input', text => {
-            this.selection.pivotItem.text(text);
+            this.selection.pivotItem.text(text || ' ');
+            this.selection.pivotItem
+                .attr('data-value', text)
+                .text(parse(text));
             this.saveTextToStore(text);
         });
 

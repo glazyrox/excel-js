@@ -1,4 +1,4 @@
-import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE } from './types';
+import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE, CURRENT_TEXT } from './types';
 
 export const rootReducer = (state = {}, action) => {
     const { type, data } = action;
@@ -47,6 +47,11 @@ export const rootReducer = (state = {}, action) => {
             return {
                 ...state,
                 title: data,
+            }
+        case CURRENT_TEXT: 
+            return {
+                ...state,
+                currentText: data
             }    
         default: state
     }

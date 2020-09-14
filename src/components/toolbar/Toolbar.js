@@ -16,7 +16,8 @@ export class Toolbar extends ExcelStateComponent {
     }
 
     prepare() {
-        this.initState(DEFAULT_TOOLBAR_BUTTONS);
+        const firstCellStyle = this.store.getState().stylesState['0:0'];
+        this.initState(firstCellStyle || DEFAULT_TOOLBAR_BUTTONS);
     }
 
     get template() {

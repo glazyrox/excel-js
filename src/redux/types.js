@@ -4,3 +4,4 @@ export const CELLS_VALUES = 'CELLS_VALUES';
 export const APPLY_STYLE = 'APPLY_STYLE';
 export const CHANGE_CELL_STYLES = 'CHANGE_CELL_STYLES';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
+export const CURRENT_TEXT = 'CURRENT_TEXT'

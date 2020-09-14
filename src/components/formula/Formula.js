@@ -28,7 +28,6 @@ export class Formula extends ExcelComponent {
         this.$on('table:getTextToFormulaInput', text => {
             this.$formula.text(text);
         });
-
         this.$formula.text(this.store.getState().currentText);
     }
 
@@ -38,7 +37,9 @@ export class Formula extends ExcelComponent {
     }
 
     onInput(event) {
-        this.$emit('formula:input', $(event.target).text());
+        const text = $(event.target).text();
+        console.log(text);
+        this.$emit('formula:input', text);
     }
     
     onKeydown(event) {
