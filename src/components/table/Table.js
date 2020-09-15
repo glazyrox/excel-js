@@ -38,7 +38,6 @@ export class Table extends ExcelComponent {
         this.$dispatch(actions.changeCurrentText(this.selection.pivotItem.text()));
         
         this.$on('formula:input', text => {
-            this.selection.pivotItem.text(text || ' ');
             this.selection.pivotItem
                 .attr('data-value', text)
                 .text(parse(text));

@@ -60,7 +60,7 @@ class Dom {
     }
 
     text(text) {
-        if (text) {
+        if (text !== undefined) {
             this.$el.textContent = text;
             return this.$el;
         }
@@ -106,13 +106,12 @@ class Dom {
         this.$el.classList.remove(className);
     }
 
-    attr(name, value) {
+    attr(name, value = null) {
         if (value) {
             this.$el.setAttribute(name, value);
             return this
-        }
-
-        return this.$el.getAttribute(name);
+        } 
+        return this;
     }
 }
 
