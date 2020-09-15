@@ -55,8 +55,12 @@ class Dom {
         return this.$el.dataset;
     }
 
+    id() {
+        return this.$el.dataset.id;
+    }
+
     text(text) {
-        if (text) {
+        if (text !== undefined) {
             this.$el.textContent = text;
             return this.$el;
         }
@@ -80,9 +84,18 @@ class Dom {
     }
 
     css(styles = {}) {
-        Object.keys(styles).map(key => {
-            this.$el.style[key] = styles[key];
-        })
+        Object
+            .keys(styles)
+            .forEach(key => {
+                this.$el.style[key] = styles[key];
+            })
+    }
+
+    getStyles(styles = []) {
+        return styles.reduce((res, current) => {
+            res[current] = this.$el.style[current];
+            return res
+        }, {})
     }
 
     addClass(className) {
@@ -91,6 +104,14 @@ class Dom {
 
     removeClass(className) {
         this.$el.classList.remove(className);
+    }
+
+    attr(name, value = null) {
+        if (value) {
+            this.$el.setAttribute(name, value);
+            return this
+        } 
+        return this;
     }
 }
 

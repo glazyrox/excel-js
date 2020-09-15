@@ -1,58 +1,47 @@
-import { ExcelComponent } from "../../core/ExcelComponent";
+import { ExcelStateComponent } from "../../core/ExcelStateComponent";
+import { createToolbar } from "./toolbar.template";
+import { $ } from '../../core/dom';
+import { DEFAULT_TOOLBAR_BUTTONS } from "../../constants";
 
-export class Toolbar extends ExcelComponent {
+export class Toolbar extends ExcelStateComponent {
     static className = 'excel__toolbar';
 
     constructor($root, options) {
         super($root, {
             name: 'Toolbar',
             listeners: ['click'],
+            subscribe: ['currentStyles'],
             ...options
         })
     }
 
+    prepare() {
+        const firstCellStyle = this.store.getState().stylesState['0:0'];
+        this.initState(firstCellStyle || DEFAULT_TOOLBAR_BUTTONS);
+    }
+
+    get template() {
+        return createToolbar(this.state);
+    }
+
     toHTML() {
-        return `
-            <div class="button">
-                <span class="material-icons">
-                    format_align_left
-            </span>
-            </div>
+        return this.template;
+    }
 
-            <div class="button">
-                <span class="material-icons">
-                    format_align_center
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_align_right
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_bold
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_italic
-                </span>
-            </div>
-
-            <div class="button">
-                <span class="material-icons">
-                    format_underline
-                </span>
-            </div>
-        `
+    storeChanged(changes) {
+        this.setState(changes.currentStyles);
     }
 
     onClick(event) {
-        console.log(event.target);
+        const $target = $(event.target);
+
+        if ($target.data.type === 'button') {
+            const value = JSON.parse($target.data.value);
+            // const key = Object.keys(value)[0];
+
+            this.$emit('toolbar:appStyle', value);
+            // this.setState({[key]: value[key]})
+        }
     }
     
 }

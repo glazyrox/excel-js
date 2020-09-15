@@ -1,20 +1,26 @@
 import { $ } from "@core/dom";
 import { Emmiter } from "../../core/Emmiter";
+import { StoreSubscriber } from "../../core/StoreSubscriber";
 
 export class Excel {
     constructor(selector, options) {
         this.$el = $(selector)
         this.components = options.components || [];
         this.emmiter = new Emmiter();
+        this.store = options.store;
+        this.subscriber = new StoreSubscriber(this.store);
     }
 
     getRoot() {
         const $root = $.create('div', 'excel');
-        const componentOptions = { emmiter: this.emmiter }
+        const componentOptions = { 
+            emmiter: this.emmiter,
+            store: this.store,
+        }
 
         this.components = this.components.map(Component => { // массив классов
             const $el = $.create('div', Component.className); // див с классом
-            const component = new Component($el, componentOptions); // экземпляр класса (инстанс)
+            const component = new Component($el, componentOptions); // экземпляр класса компонента(инстанс)
             $el.html(component.toHTML()); // создает компонент из текста тэгов
             $root.append($el); // добавляет готовый хтмл
 
@@ -27,12 +33,14 @@ export class Excel {
     render() {
         this.$el.append(this.getRoot());
 
+        this.subscriber.subscribeComponents(this.components);
         this.components.forEach(component => {
             component.init();
         })
     }
 
     destroy() {
+        this.subscriber.unsubscribeFromStore();
         this.components.forEach(component => component.destroy());
     }
 }

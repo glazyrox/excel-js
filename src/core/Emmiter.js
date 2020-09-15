@@ -9,9 +9,8 @@ export class Emmiter {
         if (!Array.isArray(this.listeners[event])) {
             return false;
         }
-
         this.listeners[event].forEach(listener => {
-            listener(args);
+            listener(...args);
         })
 
         return true;
@@ -28,11 +27,3 @@ export class Emmiter {
         }
     }
 }
-
-const emmiter = new Emmiter;
-
-const unsub = emmiter.subscribe('sosat', data => console.log(data));
-
-unsub();
-
-emmiter.emit('sosat', 'sosy');

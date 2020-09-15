@@ -62,5 +62,6 @@ export const getNextCellCoords = (key, coords) => { // (0 - row, 0 - cell)
 export const getTextTyFormula = (text, _this) => {
     // const { textContent } = event.target;
 
-    _this.$emit('table:getTextToFormulaInput', text);
+    _this.$emit('table:select', text);
+    // tut dispatch v store
 }
