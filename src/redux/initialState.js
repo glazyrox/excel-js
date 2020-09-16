@@ -1,4 +1,4 @@
-import { storage } from '@core/utils'
+// import { storage } from '@core/utils'
 
 const defaultState = {
   rowState: {},
@@ -9,6 +9,6 @@ const defaultState = {
   title: 'Название таблицы'
 }
 
-export const initialState = storage('excel-state')
-  ? storage('excel-state')
-  : defaultState
+export const normalizeInitialState = (state) => {
+  return state ? state : defaultState;
+}

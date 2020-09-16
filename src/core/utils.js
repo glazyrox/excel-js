@@ -28,10 +28,13 @@ export const getRange = (first, last) => {
 export const storage = (key, data = null) => {
     if (!data && localStorage[key]) {
         const store = JSON.parse(localStorage[key]);
-        store.currentText = '';
-        store.currentStyles = {};
+        if (store) {
+            store.currentText = '';
+            store.currentStyles = {};
+        }
         return store;
     }
+    
     localStorage.setItem(key, JSON.stringify(data));
 }
 

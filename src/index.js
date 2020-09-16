@@ -1,6 +1,6 @@
 import { Router } from './core/routes/Router';
-import { Dashboard } from './core/page/Dashboard';
-import { ExcelPage } from './core/page/ExcelPage';
+import { Dashboard } from './core/pages/Dashboard';
+import { ExcelPage } from './core/pages/ExcelPage';
 import './scss/index.scss';
 
 new Router('#app', {
