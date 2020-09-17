@@ -1,7 +1,11 @@
-export function toHTML() {
+import { storage } from "../utils";
+
+export function toHTML(tableItem) {
+    const { id, title } = tableItem;
+    
     return `
         <li class="db__record">
-            <a href="#">Таблица номер 1</a>
+            <a href="#${id}">${title}</a>
             <strong>12.06.2020</strong>
         </li>
     `
@@ -27,12 +31,24 @@ export function getRecord() {
     return `<p>Вы пока не создали ни одной таблицы</p>`
 }
 
+export const getTitle = (key) => {
+}
+
 export function createAllRecords() {
     const tablesKeys = getParamsFromLocalStore();
-
+    
     if (!tablesKeys.length) {
         return `<p>Вы пока не создали ни одной таблицы</p>`
     }
+
+    const tablesList = tablesKeys.map(id => {
+        const { title } = storage(id);
+
+        return {
+            id,
+            title,
+        }
+    })
 
     return `
     <div class="db__list-header">
@@ -41,7 +57,7 @@ export function createAllRecords() {
     </div>
 
     <ul class="db__list">
-        ${tablesKeys.map(toHTML).join('')}
+        ${tablesList.map(toHTML).join('')}
     </ul>
     `
 }

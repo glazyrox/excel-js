@@ -26,6 +26,7 @@ export const getRange = (first, last) => {
 }
 
 export const storage = (key, data = null) => {
+
     if (!data && localStorage[key]) {
         const store = JSON.parse(localStorage[key]);
         if (store) {

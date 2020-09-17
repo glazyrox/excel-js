@@ -4,7 +4,8 @@ import { Page } from "./Page";
 
 export class Dashboard extends Page {
     getRoot() {
-        const now = Date.now().toString();
+        const now = Date.now().toString().replace(':', '/');
+        
         return $.create('div', 'db').html(`
 
             <div class='db__header'>

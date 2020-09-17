@@ -21,7 +21,6 @@ export const rootReducer = (state = {}, action) => {
             }
         case CELLS_VALUES:
             field = 'cellState';
-            console.log(data);
             return {
                 ...state,
                 cellsState: {...state.cellsState, ...value(state, field, action)},
