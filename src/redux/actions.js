@@ -1,4 +1,4 @@
-import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE, CURRENT_TEXT } from './types';
+import { CELLS_VALUES, TABLE_ROW_RESIZE, TABLE_CELL_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE, CURRENT_TEXT, UPDATE_DATE } from './types';
 
 // Action Creator
 export const tableResize = (data) => {
@@ -42,5 +42,11 @@ export const changeCurrentText = (data) => {
     return {
         type: CURRENT_TEXT,
         data
+    }
+}
+
+export const updateDate = () => {
+    return {
+        type: UPDATE_DATE,
     }
 }

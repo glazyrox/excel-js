@@ -1,4 +1,4 @@
-import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE, CURRENT_TEXT } from './types';
+import { TABLE_CELL_RESIZE, CELLS_VALUES, TABLE_ROW_RESIZE, CHANGE_CELL_STYLES, APPLY_STYLE, CHANGE_TITLE, CURRENT_TEXT, UPDATE_DATE } from './types';
 
 export const rootReducer = (state = {}, action) => {
     const { type, data } = action;
@@ -21,7 +21,6 @@ export const rootReducer = (state = {}, action) => {
             }
         case CELLS_VALUES:
             field = 'cellState';
-            console.log(data);
             return {
                 ...state,
                 cellsState: {...state.cellsState, ...value(state, field, action)},
@@ -52,7 +51,12 @@ export const rootReducer = (state = {}, action) => {
             return {
                 ...state,
                 currentText: data
-            }    
+            }
+        case UPDATE_DATE: 
+            return {
+                ...state,
+                date: new Date().toJSON()
+            }
         default: state
     }
 

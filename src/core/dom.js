@@ -20,7 +20,7 @@ class Dom {
         return this.$el;
     }
 
-   clear(params) {
+   clear() {
         this.html('');
 
         return this;
