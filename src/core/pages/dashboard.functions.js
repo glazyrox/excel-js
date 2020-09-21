@@ -1,12 +1,15 @@
 import { storage } from "../utils";
 
 export function toHTML(tableItem) {
-    const { id, title } = tableItem;
+    const { id, title, date } = tableItem;
     
     return `
         <li class="db__record">
             <a href="#${id}">${title}</a>
-            <strong>12.06.2020</strong>
+            <strong>
+            ${new Date(date).toLocaleDateString()}
+            ${new Date(date).toLocaleTimeString()}
+            </strong>
         </li>
     `
 }
@@ -42,11 +45,12 @@ export function createAllRecords() {
     }
 
     const tablesList = tablesKeys.map(id => {
-        const { title } = storage(id);
+        const { title, date } = storage(id);
 
         return {
             id,
             title,
+            date,
         }
     })
 

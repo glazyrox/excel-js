@@ -6,7 +6,8 @@ const defaultState = {
   cellsState: {},
   currentStyles: {},
   stylesState: {},
-  title: 'Название таблицы'
+  title: 'Название таблицы',
+  date: new Date().toJSON(),
 }
 
 export const normalizeInitialState = (state) => {
