@@ -72,3 +72,5 @@ export const debounce = (fn, wait) => {
         timeout = setTimeout(later, wait);
     }
 }
+
+export const preventDefault = e => e.preventDefault();
